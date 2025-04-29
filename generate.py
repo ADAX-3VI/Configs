@@ -18,12 +18,14 @@ def generate_v2ray_config():
         "path": "/v2ray",
         "tls": "true"
     }
-    return config
+    return json.dumps(config, indent=4)
 
-configs = [generate_v2ray_config() for _ in range(5)]
+configs = []
+for _ in range(5):
+    configs.append(generate_v2ray_config())
 
 with open("v2ray_configs.txt", "w") as file:
     for config in configs:
-        file.write(json.dumps(config, indent=4) + "\n\n")
+        file.write(config + "\n\n")
 
 print("5 V2Ray configurations generated and saved!")
