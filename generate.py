@@ -1,4 +1,5 @@
 import uuid
+import uuid
 import json
 
 def generate_uuid():
@@ -18,21 +19,19 @@ def generate_v2ray_config():
         "path": "/v2ray",
         "tls": "true"
     }
-    return json.dumps(config, indent=4)
+    return config  # شیء JSON را مستقیماً برگردانید
 
 configs = []
 for _ in range(5):
-    # هر پیکربندی را به صورت جداگانه بررسی کنید
-    try:
-        config = generate_v2ray_config()
-        configs.append(config)
-    except ValueError as e:
-        print(f"Error generating config: {e}")
-        continue
+    configs.append(generate_v2ray_config())
 
-# ذخیره در فایل
+# ذخیره در فایل به صورت درست و با قالب JSON
 with open("v2ray_configs.txt", "w") as file:
     for config in configs:
-        file.write(config + "\n\n")
+        try:
+            json.dump(config, file, indent=4)  # JSON معتبر را در فایل ذخیره کنید
+            file.write("\n\n")  # فاصله بین هر پیکربندی
+        except ValueError as e:
+            print(f"Error writing config to file: {e}")
 
 print("5 V2Ray configurations generated and saved!")
