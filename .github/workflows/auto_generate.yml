@@ -31,6 +31,6 @@ jobs:
           git config --global user.name "yourusername"
           git add v2ray_configs.json
           git commit -m "Auto-generated V2Ray configs"
-          git push
+          git push https://github.com/${{ github.repository }}.git
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
