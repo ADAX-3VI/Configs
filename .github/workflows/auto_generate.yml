@@ -22,15 +22,15 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt || echo "No requirements.txt file found"
-
       - name: Run generator
         run: python generate.py
 
-      - name: Upload generated config files as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: v2ray-configs
-          path: v2ray_configs.json
+      - name: Commit and push the generated config file
+        run: |
+          git config --global user.email "youremail@example.com"
+          git config --global user.name "yourusername"
+          git add v2ray_configs.json
+          git commit -m "Auto-generated V2Ray configs"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
