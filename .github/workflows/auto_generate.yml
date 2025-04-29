@@ -24,3 +24,9 @@ jobs:
 
       - name: Run generator
         run: python generate.py
+
+      - name: Upload generated config files as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: v2ray-configs
+          path: v2ray_configs.json
