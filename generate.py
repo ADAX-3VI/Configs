@@ -1,30 +1,47 @@
 import uuid
 import json
-import base64
+import random
 
-def generate_v2ray_link():
+def generate_uuid():
+    return str(uuid.uuid4())
+
+def generate_random_ip():
+    return f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}"
+
+def generate_random_port():
+    return random.randint(1000, 65535)
+
+def generate_random_path():
+    paths = ["/v2ray", "/path1", "/path2", "/custom-path"]
+    return random.choice(paths)
+
+def generate_v2ray_config():
     config = {
         "v": "2",
-        "ps": "Auto Generated",
-        "add": "v2rayserver.com",
-        "port": "443",
-        "id": str(uuid.uuid4()),
+        "ps": "Auto Generated V2Ray Config",
+        "add": generate_random_ip(),
+        "port": str(generate_random_port()),
+        "id": generate_uuid(),
         "aid": "64",
         "net": "tcp",
         "type": "none",
-        "host": "",
-        "path": "/v2ray",
-        "tls": "tls"
+        "host": generate_random_ip(),
+        "path": generate_random_path(),
+        "tls": "true"
     }
-    json_str = json.dumps(config, separators=(',', ':'))
-    base64_str = base64.b64encode(json_str.encode()).decode()
-    return f"vmess://{base64_str}"
+    return config
 
-links = []
+configs = []
+
 for _ in range(5):
-    links.append(generate_v2ray_link())
+    configs.append(generate_v2ray_config())
 
-with open("v2ray_links.txt", "w") as file:
-    file.write("\n".join(links))
+with open("v2ray_configs.json", "w") as file:
+    for config in configs:
+        try:
+            json.dump(config, file, indent=4)
+            file.write("\n\n")
+        except ValueError as e:
+            print(f"Error writing config: {e}")
 
-print("5 V2Ray links generated and saved.")
+print("5 V2Ray configurations generated and saved!")
