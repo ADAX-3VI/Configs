@@ -22,8 +22,15 @@ def generate_v2ray_config():
 
 configs = []
 for _ in range(5):
-    configs.append(generate_v2ray_config())
+    # هر پیکربندی را به صورت جداگانه بررسی کنید
+    try:
+        config = generate_v2ray_config()
+        configs.append(config)
+    except ValueError as e:
+        print(f"Error generating config: {e}")
+        continue
 
+# ذخیره در فایل
 with open("v2ray_configs.txt", "w") as file:
     for config in configs:
         file.write(config + "\n\n")
