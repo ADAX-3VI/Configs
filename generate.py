@@ -7,7 +7,7 @@ def generate_uuid():
 def generate_v2ray_config():
     uuid_value = generate_uuid()
     config = f"""
-    {
+    {{
         "v": "2",
         "ps": "Auto Generated V2Ray Config",
         "add": "v2rayserver.com",
@@ -19,7 +19,7 @@ def generate_v2ray_config():
         "host": "v2rayserver.com",
         "path": "/v2ray",
         "tls": "true"
-    }
+    }}
     """
     return config
 
